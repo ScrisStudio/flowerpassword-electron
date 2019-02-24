@@ -14,7 +14,7 @@
     "url": "git+https://github.com/RoderickQiu/flowerpassword-electron.git"
   },
   "author": "RoderickQiu",
-  "license": "GPL v3",
+  "license": "GPL-3.0-or-later",
   "appId": "com.scrisstudio.flowerpasswordelectron",
   "copyright": "© Roderick Qiu",
   "productName": "flowerpassword-electron",
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
-    "flowerpassword.js": "^2.0.0"
+    "blueimp-md5": "^2.10.0"
   },
   "build": {
     "win": {

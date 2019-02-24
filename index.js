@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain, globalShortcut, Tray, Menu } = require('electron')
+const path = require("path");
 
 // 保持对window对象的全局引用，如果不这么做的话，当JavaScript对象被
 // 垃圾回收的时候，window对象将会自动的关闭
@@ -14,7 +15,7 @@ function createWindow() {
         show: false,
         hasShadow: true,
         webPreferences: { nodeIntegration: true },
-        title: "FlowerPassword",
+        title: "FlowerPasswordElectron",
         icon: "./res/icons/icon.png",
         backgroundColor: "#fefefe"
     });// 为跨平台优化
@@ -40,7 +41,46 @@ function createWindow() {
 // Electron 会在初始化后并准备
 // 创建浏览器窗口时，调用这个函数。
 // 部分 API 在 ready 事件触发后才能使用。
-app.on('ready', createWindow)
+app.on('ready', () => {
+    createWindow();
+
+    globalShortcut.register('CommandOrControl+Shift+Alt+F', () => {
+        win.isVisible() ? win.hide() : win.show();
+    })
+
+    if (process.platform == "win32") tray = new Tray(path.join(__dirname, '\\res\\icons\\iconWin.ico'));
+    else if (process.platform != "darwin") tray = new Tray(path.join(__dirname, '\\res\\icons\\wnrIcon.png'));
+    contextMenu = Menu.buildFromTemplate([
+        {
+            label: 'Show / Hide', click: () => {
+                win.isVisible() ? win.hide() : win.show();
+            }
+        }, {
+            label: 'Exit', click: () => { app.quit() }
+        }
+    ]);
+    if (tray != null) {
+        tray.setContextMenu(contextMenu);
+        tray.on('click', () => {
+            win.isVisible() ? win.hide() : win.show();
+        });//托盘菜单
+    }
+
+    if (process.platform === 'darwin') {
+        var template = [{
+            label: 'FlowerPasswordElectron',
+            submenu: [{
+                label: 'Quit',
+                accelerator: 'CmdOrCtrl+Q',
+                click: function () {
+                    app.quit();
+                }
+            }]
+        }];
+        var osxMenu = Menu.buildFromTemplate(template);
+        Menu.setApplicationMenu(osxMenu)
+    }// 应付macOS的顶栏空缺
+})
 
 // 当全部窗口关闭时退出。
 app.on('window-all-closed', () => {
@@ -57,4 +97,8 @@ app.on('activate', () => {
     if (win === null) {
         createWindow()
     }
+})
+
+ipcMain.on('winhider', function () {
+    win.hide()
 })

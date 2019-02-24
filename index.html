@@ -17,7 +17,66 @@
 </head>
 
 <body>
-
+    <div class="d-flex mx-auto justify-content-center align-items-center text-dark" id="main">
+        <div id="controller">
+            <a href="javascript:require('electron').shell.openExternal(require('./package.json').homepage)"
+                class="small flower"><i class="fa fa-info fa-fw" title="About"></i></a>&nbsp;&nbsp;
+            <a href="javascript:winhider()" class="small flower" id="win-hider"><i class="fa fa-sort-desc fa-fw"
+                    title="Hide the window to system tray"></i></a><span id="no-use-space">&nbsp;&nbsp;</span>
+            <a href="javascript:window.close()" class="small flower"><i class="fa fa-times fa-fw" title="Exit"></i></a>
+        </div>
+        <div id="set" class="justify-content-center">
+            <input name="password" id="password" placeholder="记忆密码" type="password" class="lead"
+                autofocus /><br /><br />
+            <input name="key" id="key" placeholder="区分代号" type="text" class="lead" /><br /><br />
+            <p id="code" class="small text-black-50">按下<b>Enter</b>键来查看代码</p>
+        </div>
+    </div>
+    <script>
+        const clipboard = require('electron').clipboard;
+        const ipc = require('electron').ipcRenderer;
+        const md5 = require('blueimp-md5');
+        function winhider() {
+            ipc.send("winhider");
+        }
+        function keydown(e) {
+            var currKey = 0, e = e || event;
+            if (e.keyCode == 13) {
+                var password = $("#password").val();
+                var key = $("#key").val();
+                if (password && key) {
+                    var md5one = md5(password, key);
+                    var md5two = md5(md5one, 'snow');
+                    var md5three = md5(md5one, 'kise');
+                    //计算大小写
+                    var rule = md5three.split("");
+                    var source = md5two.split("");
+                    for (var i = 0; i <= 31; i++) {
+                        if (isNaN(source[i])) {
+                            str = "sunlovesnow1990090127xykab";
+                            if (str.search(rule[i]) > -1) {
+                                source[i] = source[i].toUpperCase();
+                            }
+                        }
+                    }
+                    var code32 = source.join("");
+                    var code1 = code32.slice(0, 1);
+                    if (isNaN(code1)) {
+                        var code16 = code32.slice(0, 16);
+                    } else {
+                        var code16 = "K" + code32.slice(1, 16);
+                    }
+                    $("#code").text(code16);
+                    clipboard.writeText(code16);
+                    //$("#code32").text(code32);
+                    //$("#code6").text(password);
+                } else {
+                    $('#code').html("<b>没有足够信息</b>");
+                }
+            }
+        }
+        document.onkeydown = keydown;
+    </script>
 </body>
 
 </html>

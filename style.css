@@ -1,0 +1,45 @@
+html, body{
+    font-family: "Source Han Sans CN", -apple-system, "Microsoft YaHei UI", "微软雅黑", sans-serif;
+    background-color: #fefefe;
+    width: 100%;
+    height: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;/* center in v/h */
+    text-align: center;
+    -webkit-app-region: drag;/* let the app draggable */
+}
+input{
+    display: inline-block;
+    line-height: inherit;
+    margin: 0rem;
+    padding: 1px 0px;
+    outline: none;
+    border: none;
+    text-align: center;
+}
+input::-webkit-input-placeholder { 
+    color: #999999; 
+    transition: color.5s; 
+    text-align: center;
+}
+input:focus::-webkit-input-placeholder, input:hover::-webkit-input-placeholder { 
+    color: #999999c2; 
+    transition: color.5s; 
+}
+#controller{
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-size: 18px;
+    -webkit-app-region: no-drag;/* let it clickable */
+    -webkit-user-select: none;
+}
+#main{
+    -webkit-app-region: no-drag;/* let it clickable */
+    -webkit-user-select: text;
+}
+.flower{
+    color: #0099cc;
+}
