@@ -10,8 +10,27 @@ html, body{
     text-align: center;
     -webkit-app-region: drag;/* let the app draggable */
 }
-input{
+.flower{
+    color: #0099cc;
+}
+label{
     display: inline-block;
+    vertical-align: middle;
+}
+input[type="checkbox"] {
+    -webkit-appearance: none;/* remove default style */
+    border: solid #0099cc 2px;
+    border-radius: 10px;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+}
+input[type="checkbox"]:checked {
+    background-image: url(./res/icons/check.png);
+    background-size: contain;
+}
+.form{
+    -webkit-appearance: none;/* remove default style */
     line-height: inherit;
     margin: 0rem;
     padding: 1px 0px;
@@ -19,27 +38,31 @@ input{
     border: none;
     text-align: center;
 }
-input::-webkit-input-placeholder { 
+.form::-webkit-input-placeholder { 
     color: #999999; 
     transition: color.5s; 
     text-align: center;
 }
-input:focus::-webkit-input-placeholder, input:hover::-webkit-input-placeholder { 
+.form:focus::-webkit-input-placeholder, .form:hover::-webkit-input-placeholder { 
     color: #999999c2; 
     transition: color.5s; 
 }
 #controller{
-    position: absolute;
+    position: fixed;
     top: 5px;
     right: 8px;
     font-size: 18px;
     -webkit-app-region: no-drag;/* let it clickable */
     -webkit-user-select: none;
 }
-#main{
+#settings{
+    position: fixed;
+    bottom: 5px;
+    font-size: 12px;
     -webkit-app-region: no-drag;/* let it clickable */
     -webkit-user-select: text;
 }
-.flower{
-    color: #0099cc;
+#main{
+    -webkit-app-region: no-drag;/* let it clickable */
+    -webkit-user-select: text;
 }

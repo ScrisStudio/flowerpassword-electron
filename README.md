@@ -4,11 +4,18 @@
 
 flowerpassword-electron是一个使用Electron构建的现代花密实现。
 
+关于花密：[简介](https://flowerpassword.com/guide)
+
 ## 功能
 
 - 基本花密功能
+- 自动复制
 - 现代化的UI
 - 对高分辨率屏幕的适配
+
+## 使用方法
+
+在“记忆密码”框、“区分代号”框中填入对应的字符串，再按Enter键，代码将会自动复制到剪贴板。
 
 ## 任务列表
 
@@ -36,5 +43,6 @@ flowerpassword-electron是一个使用Electron构建的现代花密实现。
 - auto-launch
 - blueimp-md5
 - electron-builder
+- electron-store
 
 _Copyright (c) 2019 **[Roderick Qiu](https://roderickqiu.scris.top)**_

@@ -76,6 +76,19 @@ app.on('ready', () => {
                     app.quit();
                 }
             }]
+        }, {
+            label: 'Edit',
+            submenu: [
+                { role: 'undo' },
+                { role: 'redo' },
+                { type: 'separator' },
+                { role: 'cut' },
+                { role: 'copy' },
+                { role: 'paste' },
+                { role: 'pasteandmatchstyle' },
+                { role: 'delete' },
+                { role: 'selectall' }
+            ]
         }];
         var osxMenu = Menu.buildFromTemplate(template);
         Menu.setApplicationMenu(osxMenu)
