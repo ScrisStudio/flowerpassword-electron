@@ -1,6 +1,6 @@
 {
   "name": "flowerpassword-electron",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A modern cross-platform flowerpassword implement",
   "main": "index.js",
   "scripts": {
@@ -23,13 +23,13 @@
   },
   "homepage": "https://github.com/RoderickQiu/flowerpassword-electron#readme",
   "devDependencies": {
-    "electron": "^4.0.5",
-    "electron-builder": "20.38.5"
+    "electron": "^4.1.4",
+    "electron-builder": "^20.39.0"
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
     "blueimp-md5": "^2.10.0",
-    "electron-store": "2.0.0"
+    "electron-store": "^3.1.0"
   },
   "build": {
     "win": {

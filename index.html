@@ -36,6 +36,8 @@
             <label for="longmode-set">32位模式</label>&nbsp;
             <input id="autocopy-set" type="checkbox" onchange="autocopyset()" />
             <label for="autocopy-set">自动复制</label>&nbsp;
+            <span id="autohider"><input id="autohide-set" type="checkbox" onchange="autohideset()" />
+                <label for="autohide-set">复制后自动隐藏</label>&nbsp;</span>
             <input id="autostart-set" type="checkbox" onchange="autostartset()" />
             <label for="autostart-set">开机自启</label>&nbsp;
         </div>
@@ -82,11 +84,21 @@
                 }
                 if (store.get("longmode")) {
                     $("#code").text(code32);
-                    if (store.get("autocopy")) clipboard.writeText(code32);
+                    if (store.get("autocopy")) {
+                        clipboard.writeText(code32);
+                        if (store.get("autohide")) {
+                            winhider();
+                        }
+                    }
                 }
                 else {
                     $("#code").text(code16);
-                    if (store.get("autocopy")) clipboard.writeText(code16);
+                    if (store.get("autocopy")) {
+                        clipboard.writeText(code16);
+                        if (store.get("autohide")) {
+                            winhider();
+                        }
+                    }
                 }
                 //$("#code32").text(code32);
                 //$("#code6").text(password);
@@ -119,13 +131,33 @@
             if (document.getElementById("longmode-set").checked == true) store.set("longmode", true);
             else store.set("longmode", false);
         }
+
         if (store.get("autocopy") == undefined) store.set("autocopy", true);
-        if (store.get("autocopy") == true) document.getElementById("autocopy-set").checked = true;
-        else document.getElementById("autocopy-set").checked = false;
-        function autocopyset() {
-            if (document.getElementById("autocopy-set").checked == true) store.set("autocopy", true);
-            else store.set("autocopy", false);
+        if (store.get("autocopy") == true) {
+            document.getElementById("autocopy-set").checked = true;
+            $("#autohider").css("display", "inline-block");
+        } else {
+            document.getElementById("autocopy-set").checked = false;
+            $("#autohider").css("display", "none");
         }
+        function autocopyset() {
+            if (document.getElementById("autocopy-set").checked == true) {
+                store.set("autocopy", true);
+                $("#autohider").css("display", "inline-block");
+            } else {
+                store.set("autocopy", false);
+                $("#autohider").css("display", "none");
+            }
+        }
+
+        if (store.get("autohide") == undefined) store.set("autohide", false);
+        if (store.get("autohide") == true) document.getElementById("autohide-set").checked = true;
+        else document.getElementById("autohide-set").checked = false;
+        function autohideset() {
+            if (document.getElementById("autohide-set").checked == true) store.set("autohide", true);
+            else store.set("autohide", false);
+        }
+
         if (store.get("autostart") == undefined) store.set("autostart", false);
         if (store.get("autostart") == true) document.getElementById("autostart-set").checked = true;
         else document.getElementById("autostart-set").checked = false;
