@@ -15,8 +15,6 @@ function createWindow() {
         show: false,
         hasShadow: true,
         webPreferences: { nodeIntegration: true },
-        title: "FlowerPasswordElectron",
-        icon: "./res/icons/icon.png",
         backgroundColor: "#fefefe"
     });// 为跨平台优化
 

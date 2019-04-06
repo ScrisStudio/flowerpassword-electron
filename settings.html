@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>设置</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+    <!-- solve the electron-jquery conflict -->
+    <script src="res/lib/jquery-3.3.1.min.js"></script>
+    <script src="res/lib/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="res/lib/bootstrap.min.css" />
+    <script src="res/lib/all.js"></script>
+    <script src="res/lib/v4-shims.js"></script><!-- font-awesome 5 use as 4 -->
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+    <div class="d-flex mx-auto justify-content-center align-items-center text-dark" id="main">
+        <div id="controller">
+            <a href="javascript:require('electron').shell.openExternal(require('./package.json').homepage)"
+                class="small flower"><i class="fa fa-info fa-fw" title="关于"></i></a>&nbsp;&nbsp;
+            <a href="javascript:winhider()" class="small flower" id="win-hider"><i class="fa fa-sort-desc fa-fw"
+                    title="最小化到托盘"></i></a><span id="no-use-space">&nbsp;&nbsp;</span>
+            <a href="index.html" class="small flower"><i class="fa fa-chevron-left" title="返回"></i></a>&nbsp;
+        </div>
+        <div id="set" class="flower align-content-center">
+            <div class="h3">
+                <i class="fa fa-cog fa-fw" id="settings" aria-hidden="true"></i>设置
+                <hr />
+            </div>
+            <input id="longmode-set" type="checkbox" onchange="longmodeset()" />
+            <label for="longmode-set">32位模式</label>&nbsp;
+            <input id="autocopy-set" type="checkbox" onchange="autocopyset()" />
+            <label for="autocopy-set">自动复制</label>&nbsp;
+            <br />
+            <span id="autohider"><input id="autohide-set" type="checkbox" onchange="autohideset()" />
+                <label for="autohide-set">复制后自动隐藏</label>&nbsp;</span>
+            <input id="autostart-set" type="checkbox" onchange="autostartset()" />
+            <label for="autostart-set">开机自启</label>&nbsp;
+            <br /><br />
+            <a href="index.html" class="flowerbtn">提交</a>
+        </div>
+        <div id="versioninfo" class="small text-black-50">
+            版本：
+            <script>document.write(require("./package.json").version);</script>
+            <br />
+        </div>
+    </div>
+    <script>
+        const Store = require('electron-store');
+        const store = new Store();
+        const remote = require('electron').remote;
+        const ipc = require('electron').ipcRenderer;
+        const md5 = require('blueimp-md5');
+
+        function winhider() {
+            ipc.send("winhider");
+        }
+
+        if (store.get("longmode") == undefined) store.set("longmode", false);
+        if (store.get("longmode") == true) document.getElementById("longmode-set").checked = true;
+        else document.getElementById("longmode-set").checked = false;
+        function longmodeset() {
+            if (document.getElementById("longmode-set").checked == true) store.set("longmode", true);
+            else store.set("longmode", false);
+        }
+
+        if (store.get("autocopy") == undefined) store.set("autocopy", true);
+        if (store.get("autocopy") == true) {
+            document.getElementById("autocopy-set").checked = true;
+            $("#autohider").css("display", "inline-block");
+        } else {
+            document.getElementById("autocopy-set").checked = false;
+            $("#autohider").css("display", "none");
+        }
+        function autocopyset() {
+            if (document.getElementById("autocopy-set").checked == true) {
+                store.set("autocopy", true);
+                $("#autohider").css("display", "inline-block");
+            } else {
+                store.set("autocopy", false);
+                $("#autohider").css("display", "none");
+            }
+        }
+
+        if (store.get("autohide") == undefined) store.set("autohide", false);
+        if (store.get("autohide") == true) document.getElementById("autohide-set").checked = true;
+        else document.getElementById("autohide-set").checked = false;
+        function autohideset() {
+            if (document.getElementById("autohide-set").checked == true) store.set("autohide", true);
+            else store.set("autohide", false);
+        }
+
+        if (store.get("autostart") == undefined) store.set("autostart", false);
+        if (store.get("autostart") == true) document.getElementById("autostart-set").checked = true;
+        else document.getElementById("autostart-set").checked = false;
+        function autostartset() {
+            var AutoLaunch = require('auto-launch');
+            var autoLauncher = new AutoLaunch({ name: 'flowerpassword-electron' });
+            if (document.getElementById("autostart-set").checked == true) {
+                store.set("autostart", true);
+                autoLauncher.isEnabled()
+                    .then(function (isEnabled) {
+                        if (isEnabled) {
+                            return;
+                        }
+                        autoLauncher.enable();
+                    })
+            }
+            else {
+                store.set("autostart", false);
+                autoLauncher.isEnabled()
+                    .then(function (isEnabled) {
+                        if (isEnabled) {
+                            autoLauncher.disable();
+                        }
+                        return;
+                    })
+            }
+        }
+    </script>
+</body>
+
+</html>

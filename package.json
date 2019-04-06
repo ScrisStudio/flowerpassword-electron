@@ -1,6 +1,6 @@
 {
   "name": "flowerpassword-electron",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A modern cross-platform flowerpassword implement",
   "main": "index.js",
   "scripts": {

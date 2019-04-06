@@ -13,6 +13,16 @@ html, body{
 .flower{
     color: #0099cc;
 }
+.flowerbtn{
+    background-color: #0099cc;
+    color: #fefefe;
+    border: 8px solid transparent;
+}
+.flowerbtn:hover{
+    background-color: #0099ccb0;
+    color: #fefefe;
+    text-decoration: none;
+}
 label{
     display: inline-block;
     vertical-align: middle;
@@ -55,7 +65,7 @@ input[type="checkbox"]:checked {
     -webkit-app-region: no-drag;/* let it clickable */
     -webkit-user-select: none;
 }
-#settings{
+#versioninfo{
     position: fixed;
     bottom: 5px;
     font-size: 12px;

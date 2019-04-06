@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>FlowerPassword</title>
+    <title>花密</title>
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Type" content="text/html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
@@ -20,27 +20,19 @@
     <div class="d-flex mx-auto justify-content-center align-items-center text-dark" id="main">
         <div id="controller">
             <a href="javascript:require('electron').shell.openExternal(require('./package.json').homepage)"
-                class="small flower"><i class="fa fa-info fa-fw" title="About"></i></a>&nbsp;&nbsp;
+                class="small flower"><i class="fa fa-info fa-fw" title="关于"></i></a>&nbsp;&nbsp;
+            <a href="settings.html" class="small flower"><i class="fa fa-cog fa-fw" title="设置"></i></a>&nbsp;&nbsp;
             <a href="javascript:winhider()" class="small flower" id="win-hider"><i class="fa fa-sort-desc fa-fw"
-                    title="Hide the window to system tray"></i></a><span id="no-use-space">&nbsp;&nbsp;</span>
-            <a href="javascript:window.close()" class="small flower"><i class="fa fa-times fa-fw" title="Exit"></i></a>
+                    title="最小化到托盘"></i></a><span id="no-use-space">&nbsp;&nbsp;</span>
+            <a href="javascript:window.close()" class="small flower"><i class="fa fa-times fa-fw"
+                    title="退出"></i></a>&nbsp;
         </div>
         <div id="set" class="justify-content-center">
             <input name="password" id="password" placeholder="记忆密码" type="password" class="lead form"
                 autofocus /><br /><br />
             <input name="key" id="key" placeholder="区分代号" type="text" class="lead form" /><br /><br />
             <p id="code" class="small text-black-50">按下<b>Enter</b>键来查看代码</p>
-        </div>
-        <div id="settings" class="small flower align-content-center">
-            <input id="longmode-set" type="checkbox" onchange="longmodeset()" />
-            <label for="longmode-set">32位模式</label>&nbsp;
-            <input id="autocopy-set" type="checkbox" onchange="autocopyset()" />
-            <label for="autocopy-set">自动复制</label>&nbsp;
-            <span id="autohider"><input id="autohide-set" type="checkbox" onchange="autohideset()" />
-                <label for="autohide-set">复制后自动隐藏</label>&nbsp;</span>
-            <input id="autostart-set" type="checkbox" onchange="autostartset()" />
-            <label for="autostart-set">开机自启</label>&nbsp;
-        </div>
+        </div><br />
     </div>
     <script>
         const Store = require('electron-store');
@@ -83,27 +75,33 @@
                     var code16 = "K" + code32.slice(1, 16);
                 }
                 if (store.get("longmode")) {
-                    $("#code").text(code32);
                     if (store.get("autocopy")) {
                         clipboard.writeText(code32);
                         if (store.get("autohide")) {
                             winhider();
-                        }
-                    }
+                            $("#password").val("");
+                            $("#key").val("");
+                        } else
+                            $("#code").text(code32);
+                    } else
+                        $("#code").text(code32);
                 }
                 else {
-                    $("#code").text(code16);
                     if (store.get("autocopy")) {
                         clipboard.writeText(code16);
                         if (store.get("autohide")) {
                             winhider();
-                        }
-                    }
+                            $("#password").val("");
+                            $("#key").val("");
+                        } else
+                            $("#code").text(code16);
+                    } else
+                        $("#code").text(code16);
                 }
                 //$("#code32").text(code32);
                 //$("#code6").text(password);
             } else {
-                $('#code').html("<b>没有足够信息</b>");
+                $('#code').html("<b>没有足够信息，请输入完整</b>");
             }
         }
         function keydown(e) {
@@ -123,66 +121,6 @@
             e.preventDefault()
             menu.popup({ window: remote.getCurrentWindow() })
         }, false)//右键菜单
-
-        if (store.get("longmode") == undefined) store.set("longmode", false);
-        if (store.get("longmode") == true) document.getElementById("longmode-set").checked = true;
-        else document.getElementById("longmode-set").checked = false;
-        function longmodeset() {
-            if (document.getElementById("longmode-set").checked == true) store.set("longmode", true);
-            else store.set("longmode", false);
-        }
-
-        if (store.get("autocopy") == undefined) store.set("autocopy", true);
-        if (store.get("autocopy") == true) {
-            document.getElementById("autocopy-set").checked = true;
-            $("#autohider").css("display", "inline-block");
-        } else {
-            document.getElementById("autocopy-set").checked = false;
-            $("#autohider").css("display", "none");
-        }
-        function autocopyset() {
-            if (document.getElementById("autocopy-set").checked == true) {
-                store.set("autocopy", true);
-                $("#autohider").css("display", "inline-block");
-            } else {
-                store.set("autocopy", false);
-                $("#autohider").css("display", "none");
-            }
-        }
-
-        if (store.get("autohide") == undefined) store.set("autohide", false);
-        if (store.get("autohide") == true) document.getElementById("autohide-set").checked = true;
-        else document.getElementById("autohide-set").checked = false;
-        function autohideset() {
-            if (document.getElementById("autohide-set").checked == true) store.set("autohide", true);
-            else store.set("autohide", false);
-        }
-
-        if (store.get("autostart") == undefined) store.set("autostart", false);
-        if (store.get("autostart") == true) document.getElementById("autostart-set").checked = true;
-        else document.getElementById("autostart-set").checked = false;
-        function autostartset() {
-            if (document.getElementById("autostart-set").checked == true) {
-                store.set("autostart", true);
-                autoLauncher.isEnabled()
-                    .then(function (isEnabled) {
-                        if (isEnabled) {
-                            return;
-                        }
-                        autoLauncher.enable();
-                    })
-            }
-            else {
-                store.set("autostart", false);
-                autoLauncher.isEnabled()
-                    .then(function (isEnabled) {
-                        if (isEnabled) {
-                            autoLauncher.disable();
-                        }
-                        return;
-                    })
-            }
-        }
     </script>
 </body>
 
