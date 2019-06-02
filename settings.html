@@ -6,8 +6,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Type" content="text/html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
-    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
-    <!-- solve the electron-jquery conflict -->
+    <script>
+        if (typeof module === 'object') {
+            window.module = module; module = undefined;
+        }
+    </script><!-- solve the electron-jquery conflict -->
     <script src="res/lib/jquery-3.3.1.min.js"></script>
     <script src="res/lib/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="res/lib/bootstrap.min.css" />
@@ -23,7 +26,9 @@
                 class="small flower"><i class="fa fa-info fa-fw" title="关于"></i></a>&nbsp;&nbsp;
             <a href="javascript:winhider()" class="small flower" id="win-hider"><i class="fa fa-sort-desc fa-fw"
                     title="最小化到托盘"></i></a><span id="no-use-space">&nbsp;&nbsp;</span>
-            <a href="index.html" class="small flower"><i class="fa fa-chevron-left" title="返回"></i></a>&nbsp;
+            <a href="index.html" class="small flower"><i class="fa fa-chevron-left" title="返回"></i></a>&nbsp;&nbsp;
+            <a href="javascript:window.close()" class="small flower"><i class="fa fa-times fa-fw"
+                    title="退出"></i></a>&nbsp;
         </div>
         <div id="set" class="flower align-content-center">
             <div class="h3">
@@ -39,12 +44,14 @@
                 <label for="autohide-set">复制后自动隐藏</label>&nbsp;</span>
             <input id="autostart-set" type="checkbox" onchange="autostartset()" />
             <label for="autostart-set">开机自启</label>&nbsp;
-            <br /><br />
+            <br />
             <a href="index.html" class="flowerbtn">提交</a>
         </div>
-        <div id="versioninfo" class="small text-black-50">
+        <div id="versioninfo" class="text-black-50">
             版本：
             <script>document.write(require("./package.json").version);</script>
+            <br />
+            全局快捷键：Command/Ctrl + Shift + Alt + F
             <br />
         </div>
     </div>

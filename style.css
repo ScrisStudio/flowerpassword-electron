@@ -1,4 +1,4 @@
-html, body{
+html, body {
     font-family: "Source Han Sans CN", -apple-system, "Microsoft YaHei UI", "微软雅黑", sans-serif;
     background-color: #fefefe;
     width: 100%;
@@ -6,41 +6,52 @@ html, body{
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    align-items: center;/* center in v/h */
+    align-items: center;
+    /* center in v/h */
     text-align: center;
-    -webkit-app-region: drag;/* let the app draggable */
+    -webkit-app-region: drag;
+    /* let the app draggable */
 }
-.flower{
+
+.flower {
     color: #0099cc;
 }
-.flowerbtn{
+
+.flowerbtn {
     background-color: #0099cc;
     color: #fefefe;
     border: 8px solid transparent;
 }
-.flowerbtn:hover{
+
+.flowerbtn:hover {
     background-color: #0099ccb0;
     color: #fefefe;
     text-decoration: none;
 }
-label{
+
+label {
     display: inline-block;
     vertical-align: middle;
 }
+
 input[type="checkbox"] {
-    -webkit-appearance: none;/* remove default style */
+    -webkit-appearance: none;
+    /* remove default style */
     border: solid #0099cc 2px;
     border-radius: 10px;
     width: 12px;
     height: 12px;
     display: inline-block;
 }
+
 input[type="checkbox"]:checked {
     background-image: url(./res/icons/check.png);
     background-size: contain;
 }
-.form{
-    -webkit-appearance: none;/* remove default style */
+
+.form {
+    -webkit-appearance: none;
+    /* remove default style */
     line-height: inherit;
     margin: 0rem;
     padding: 1px 0px;
@@ -48,31 +59,39 @@ input[type="checkbox"]:checked {
     border: none;
     text-align: center;
 }
-.form::-webkit-input-placeholder { 
-    color: #999999; 
-    transition: color.5s; 
+
+.form::-webkit-input-placeholder {
+    color: #999999;
+    transition: color.5s;
     text-align: center;
 }
-.form:focus::-webkit-input-placeholder, .form:hover::-webkit-input-placeholder { 
-    color: #999999c2; 
-    transition: color.5s; 
+
+.form:focus::-webkit-input-placeholder, .form:hover::-webkit-input-placeholder {
+    color: #999999c2;
+    transition: color.5s;
 }
-#controller{
+
+#controller {
     position: fixed;
     top: 5px;
     right: 8px;
     font-size: 18px;
-    -webkit-app-region: no-drag;/* let it clickable */
+    -webkit-app-region: no-drag;
+    /* let it clickable */
     -webkit-user-select: none;
 }
-#versioninfo{
+
+#versioninfo {
     position: fixed;
     bottom: 5px;
-    font-size: 12px;
-    -webkit-app-region: no-drag;/* let it clickable */
+    font-size: 6px;
+    -webkit-app-region: no-drag;
+    /* let it clickable */
     -webkit-user-select: text;
 }
-#main{
-    -webkit-app-region: no-drag;/* let it clickable */
+
+#main {
+    -webkit-app-region: no-drag;
+    /* let it clickable */
     -webkit-user-select: text;
 }

@@ -6,8 +6,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Type" content="text/html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
-    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
-    <!-- solve the electron-jquery conflict -->
+    <script>
+        if (typeof module === 'object') {
+            window.module = module; module = undefined;
+        }
+    </script><!-- solve the electron-jquery conflict -->
     <script src="res/lib/jquery-3.3.1.min.js"></script>
     <script src="res/lib/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="res/lib/bootstrap.min.css" />
@@ -28,10 +31,12 @@
                     title="退出"></i></a>&nbsp;
         </div>
         <div id="set" class="justify-content-center">
+            <br />
             <input name="password" id="password" placeholder="记忆密码" type="password" class="lead form"
                 autofocus /><br /><br />
             <input name="key" id="key" placeholder="区分代号" type="text" class="lead form" /><br /><br />
-            <p id="code" class="small text-black-50">按下<b>Enter</b>键来查看代码</p>
+            <p id="code" class="small text-black-50">按下<b>Enter</b>键来获取代码<br /><span id="tipautohide">将会自动复制并退出</span>
+            </p>
         </div><br />
     </div>
     <script>
@@ -44,6 +49,7 @@
         const MenuItem = remote.MenuItem;
         const menu = new Menu()
         const md5 = require('blueimp-md5');
+        if (!store.get("autohide")) $("#tipautohide").css("display", "none");
 
         function winhider() {
             ipc.send("winhider");
